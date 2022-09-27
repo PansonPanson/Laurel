@@ -5,6 +5,9 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
+
 
 /**
  * @create 2022-09-27 18:39
@@ -43,6 +46,26 @@ public class NettyServer {
                     }
                 });
 
-        serverBootstrap.bind(8000);
+        bind(serverBootstrap, 1000);
+    }
+
+    /**
+     * serverBootstrap.bind(8000);这个方法呢，它是一个异步的方法，调用之后是立即返回的，他的返回值是一个ChannelFuture，
+     * 我们可以给这个ChannelFuture添加一个监听器GenericFutureListener，然后我们在GenericFutureListener的operationComplete方法里面，我们可以监听端口是否绑定成功
+     * @param serverBootstrap
+     * @param port
+     */
+    private static void bind(final ServerBootstrap serverBootstrap, final int port) {
+        serverBootstrap.bind(port).addListener(new GenericFutureListener<Future<? super Void>>() {
+            public void operationComplete(Future<? super Void> future) {
+                if (future.isSuccess()) {
+                    System.out.println("端口[" + port + "]绑定成功!");
+                } else {
+                    System.err.println("端口[" + port + "]绑定失败!");
+                    // 我们接下来从 1000 端口号，开始往上找端口号，直到端口绑定成功，我们要做的就是在 if (future.isSuccess())的else逻辑里面重新绑定一个递增的端口号，接下来，我们把这段绑定逻辑抽取出一个bind方法
+                    bind(serverBootstrap, port + 1);
+                }
+            }
+        });
     }
 }
