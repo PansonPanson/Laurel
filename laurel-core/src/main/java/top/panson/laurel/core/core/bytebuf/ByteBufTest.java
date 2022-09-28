@@ -1,4 +1,4 @@
-package top.panson.laurel.core.core.flash;
+package top.panson.laurel.core.core.bytebuf;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;

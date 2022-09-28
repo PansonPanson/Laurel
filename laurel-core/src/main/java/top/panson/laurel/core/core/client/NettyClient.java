@@ -1,4 +1,4 @@
-package top.panson.laurel.core.core.flash.client;
+package top.panson.laurel.core.core.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
