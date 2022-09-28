@@ -1,4 +1,4 @@
-package top.panson.laurel.core.core.protocol.command;
+package top.panson.laurel.core.core.protocol;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;

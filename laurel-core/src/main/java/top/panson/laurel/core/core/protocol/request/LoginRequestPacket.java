@@ -1,15 +1,15 @@
-package top.panson.laurel.core.core.protocol.command;
-
+package top.panson.laurel.core.core.protocol.request;
 
 import lombok.Data;
+import top.panson.laurel.core.core.protocol.command.Command;
+import top.panson.laurel.core.core.protocol.Packet;
 
-/**
- * 我们拿客户端登录请求为例，定义登录请求数据包
- */
+
+
 @Data
 public class LoginRequestPacket extends Packet {
 
-    private Integer userId;
+    private String userId;
 
     private String username;
 
