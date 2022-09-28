@@ -40,6 +40,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             // 登录响应
             ByteBuf responseByteBuf = PacketCodeC.INSTANCE.encode(ctx.alloc(), loginResponsePacket);
             ctx.channel().writeAndFlush(responseByteBuf);
+
         }
     }
 
