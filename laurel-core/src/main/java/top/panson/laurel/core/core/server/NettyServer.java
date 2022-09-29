@@ -6,6 +6,12 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import top.panson.laurel.core.core.codec.PacketDecoder;
+import top.panson.laurel.core.core.codec.PacketEncoder;
+import top.panson.laurel.core.core.server.handler.LoginRequestHandler;
+import top.panson.laurel.core.core.server.handler.MessageRequestHandler;
+
+import java.util.Date;
 
 /**
  * @author panson
@@ -27,16 +33,21 @@ public class NettyServer {
                 .childOption(ChannelOption.TCP_NODELAY, true)
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     protected void initChannel(NioSocketChannel ch) {
-                        ch.pipeline().addLast(new ServerHandler());
+                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(new LoginRequestHandler());
+                        ch.pipeline().addLast(new MessageRequestHandler());
+                        ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
+
+
         bind(serverBootstrap, PORT);
     }
 
     private static void bind(final ServerBootstrap serverBootstrap, final int port) {
         serverBootstrap.bind(port).addListener(future -> {
             if (future.isSuccess()) {
-                System.out.println("端口[" + port + "]绑定成功!");
+                System.out.println(new Date() + ": 端口[" + port + "]绑定成功!");
             } else {
                 System.err.println("端口[" + port + "]绑定失败!");
             }

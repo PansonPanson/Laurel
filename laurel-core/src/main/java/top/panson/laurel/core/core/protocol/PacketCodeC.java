@@ -3,7 +3,9 @@ package top.panson.laurel.core.core.protocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import top.panson.laurel.core.core.protocol.request.LoginRequestPacket;
+import top.panson.laurel.core.core.protocol.request.MessageRequestPacket;
 import top.panson.laurel.core.core.protocol.response.LoginResponsePacket;
+import top.panson.laurel.core.core.protocol.response.MessageResponsePacket;
 import top.panson.laurel.core.core.serialize.Serializer;
 import top.panson.laurel.core.core.serialize.impl.JSONSerializer;
 
@@ -11,8 +13,7 @@ import top.panson.laurel.core.core.serialize.impl.JSONSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
-import static top.panson.laurel.core.core.protocol.command.Command.LOGIN_REQUEST;
-import static top.panson.laurel.core.core.protocol.command.Command.LOGIN_RESPONSE;
+import static top.panson.laurel.core.core.protocol.command.Command.*;
 
 
 public class PacketCodeC {
@@ -28,28 +29,25 @@ public class PacketCodeC {
         packetTypeMap = new HashMap<>();
         packetTypeMap.put(LOGIN_REQUEST, LoginRequestPacket.class);
         packetTypeMap.put(LOGIN_RESPONSE, LoginResponsePacket.class);
+        packetTypeMap.put(MESSAGE_REQUEST, MessageRequestPacket.class);
+        packetTypeMap.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();
         serializerMap.put(serializer.getSerializerAlgorithm(), serializer);
     }
 
-
-    public ByteBuf encode(ByteBufAllocator byteBufAllocator, Packet packet) {
-        // 1. 创建 ByteBuf 对象
-        ByteBuf byteBuf = byteBufAllocator.ioBuffer();
-        // 2. 序列化 java 对象
+    public void encode(ByteBuf byteBuf, Packet packet) {
+        // 1. 序列化 java 对象
         byte[] bytes = Serializer.DEFAULT.serialize(packet);
 
-        // 3. 实际编码过程
+        // 2. 实际编码过程
         byteBuf.writeInt(MAGIC_NUMBER);
         byteBuf.writeByte(packet.getVersion());
         byteBuf.writeByte(Serializer.DEFAULT.getSerializerAlgorithm());
         byteBuf.writeByte(packet.getCommand());
         byteBuf.writeInt(bytes.length);
         byteBuf.writeBytes(bytes);
-
-        return byteBuf;
     }
 
 
