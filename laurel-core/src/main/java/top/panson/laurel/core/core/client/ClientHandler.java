@@ -7,6 +7,8 @@ import top.panson.laurel.core.core.protocol.Packet;
 import top.panson.laurel.core.core.protocol.PacketCodeC;
 import top.panson.laurel.core.core.protocol.request.LoginRequestPacket;
 import top.panson.laurel.core.core.protocol.response.LoginResponsePacket;
+import top.panson.laurel.core.core.protocol.response.MessageResponsePacket;
+import top.panson.laurel.core.core.util.LoginUtil;
 
 
 import java.util.Date;
@@ -46,9 +48,13 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
             if (loginResponsePacket.isSuccess()) {
                 System.out.println(new Date() + ": 客户端登录成功");
+                LoginUtil.markAsLogin(ctx.channel());
             } else {
                 System.out.println(new Date() + ": 客户端登录失败，原因：" + loginResponsePacket.getReason());
             }
+        } else if (packet instanceof MessageResponsePacket) {
+            MessageResponsePacket messageResponsePacket = (MessageResponsePacket) packet;
+            System.out.println(new Date() + ": 收到服务端的消息: " + messageResponsePacket.getMessage());
         }
     }
 }
