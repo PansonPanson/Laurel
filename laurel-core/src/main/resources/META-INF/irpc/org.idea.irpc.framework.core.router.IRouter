@@ -1,0 +1,2 @@
+rotate=top.panson.irpc.framework.core.router.RotateRouterImpl
+random=top.panson.irpc.framework.core.router.RandomRouterImpl

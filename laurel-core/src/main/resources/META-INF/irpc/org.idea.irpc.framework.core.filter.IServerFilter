@@ -1,0 +1,4 @@
+serverLogFilterImpl=top.panson.irpc.framework.core.filter.server.ServerLogFilterImpl
+serverTokenFilterImpl=top.panson.irpc.framework.core.filter.server.ServerTokenFilterImpl
+serverServiceBeforeLimitFilterImpl=top.panson.irpc.framework.core.filter.server.ServerServiceBeforeLimitFilterImpl
+serverServiceAfterLimitFilterImpl=top.panson.irpc.framework.core.filter.server.ServerServiceAfterLimitFilterImpl

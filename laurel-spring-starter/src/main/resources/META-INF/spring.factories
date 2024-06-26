@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+top.panson.irpc.framework.spring.starter.config.IRpcServerAutoConfiguration,\
+top.panson.irpc.framework.spring.starter.config.IRpcClientAutoConfiguration
