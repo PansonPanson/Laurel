@@ -26,6 +26,9 @@ public class RpcInvocation implements Serializable {
 
     private int retry;
 
+    private Map<String, Object> attachments = new ConcurrentHashMap<>();
+
+
     public int getRetry() {
         return retry;
     }
@@ -42,7 +45,6 @@ public class RpcInvocation implements Serializable {
         this.e = e;
     }
 
-    private Map<String, Object> attachments = new ConcurrentHashMap<>();
 
     public Map<String, Object> getAttachments() {
         return attachments;
