@@ -8,3 +8,6 @@ Laurel is a java based open source RPC framework.
 3. 数据传输：序列化
 4. 集群：负载均衡
 5. 优雅上下线……
+
+
+step1： 基于Netty搭建简易的服务端和客户端通信模型
